@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Object Detection & OCR Service</title>
+    <meta name="description" content="AI-powered object detection and optical character recognition.">
+    <meta name="keywords" content="AI, Object Detection, OCR, YOLO, FastAPI, JavaScript">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,800;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <style>
+        .drag-drop-area {
+            border: 2px dashed var(--bs-gray-400);
+            border-radius: 0.75rem;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .drag-drop-area:hover,
+        .drag-drop-area.active {
+            border-color: var(--bs-blue);
+            background-color: #e3f2fd;
+        }
+        
+        /* New style for the image container */
+        .image-container {
+            position: relative;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Style for the canvas and image */
+        #preview-image {
+            max-width: 100%;
+            height: auto;
+            display: block; /* Ensures the image takes up space correctly */
+        }
+
+        #result-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .result-panel {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: var(--bs-blue);
+            background-color: #e3f2fd;
+        }
+
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .progress-bar {
+            background-color: var(--bs-blue);
+        }
+
+        .text-block-pill {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin: 0.25rem;
+            background-color: #e9ecef;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: #212529;
+        }
+
+        .text-block-pill:hover {
+            background-color: #ced4da;
+        }
+        
+        .raw-text-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="service-details-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="assets/img/scan.png" alt="">
+        <h1 class="sitename">Opti-Vision</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      
+    </div>
+  </header>
+
+    <main class="main">
+        <!-- Page Title -->
+        <div class="page-title" data-aos="fade">
+            <div class="heading">
+                <div class="container">
+                    <div class="row d-flex justify-content-center text-center">
+                        <div class="col-lg-8">
+                            <h1>Object Detection & OCR</h1>
+                            <p class="mb-0">Detects and labels objects within an image, including text recognition.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="light-background"></section>
+
+        <!-- Service Details Section -->
+        <section id="service-details" class="service-details section">
+            <div class="container">
+                <div class="row gy-5">
+
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-box">
+                            <h4>Services List</h4>
+                            <div class="services-list">
+                                <a href="Image_classification.html" ><i class="bi bi-arrow-right-circle"></i><span>Image Classification</span></a>
+                                <a href="object_detection.html" class="active"><i class="bi bi-arrow-right-circle"></i><span>Object Detection</span></a>
+                                <a href="Document_analyze.html"><i class="bi bi-arrow-right-circle"></i><span>Document Analysis</span></a>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- Main Content Area -->
+                    <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                        <div class="row">
+                            <!-- Image Upload Panel -->
+                            <div class="col-lg-7">
+                                <div class="bg-white p-4 rounded-3 shadow-sm">
+                                    <h3 class="h5 mb-3">Image source</h3>
+                                    <div class="mb-4">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="image-source" id="local-file" value="local-file" checked>
+                                            <label class="form-check-label" for="local-file">Local file</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="image-source" id="object-storage" value="object-storage">
+                                            <label class="form-check-label" for="object-storage">Object storage</label>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="h6 mb-3">Upload image</h4>
+                                    <div class="drag-drop-area" id="drop-area">
+                                        <input type="file" id="file-input" class="d-none" accept="image/*">
+                                        <p class="text-secondary mb-1">Drop a file or <span class="text-primary font-weight-bold">select one</span></p>
+                                        <p class="text-muted small">PNG, JPG, or JPEG</p>
+                                    </div>
+
+                                    <div id="preview-area" class="mt-4 text-center d-none">
+                                        <div class="image-container">
+                                            <img id="preview-image" src="#" alt="Image Preview" class="img-fluid rounded-3">
+                                            <canvas id="result-canvas"></canvas>
+                                        </div>
+                                        <p class="text-secondary small mt-2" id="image-filename"></p>
+                                    </div>
+
+                                    <div id="loading" class="text-center mt-4 d-none">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="mt-2 text-secondary">Analyzing...</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Results Panel -->
+                            <div class="col-lg-5">
+                                <div class="result-panel p-4">
+                                    <h3 class="h5 mb-3">Results</h3>
+                                    
+                                    <div id="results-display" class="d-none">
+                                        <ul class="nav nav-tabs mb-3" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <a class="nav-link active" id="labels-tab-button" data-bs-toggle="tab" href="#labels-tab" role="tab" aria-selected="true">Labels</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a class="nav-link" id="raw-text-tab-button" data-bs-toggle="tab" href="#raw-text-tab" role="tab" aria-selected="false">Raw text</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="labels-tab" role="tabpanel">
+                                                <ul class="list-unstyled mb-0" id="classification-list"></ul>
+                                            </div>
+                                            <div class="tab-pane fade" id="raw-text-tab" role="tabpanel">
+                                                <div class="mb-3">
+                                                    <div class="small text-muted mb-2">Extraction by</div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="extraction-mode" id="extraction-line" value="line" checked>
+                                                        <label class="form-check-label" for="extraction-line">Line</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="extraction-mode" id="extraction-word" value="word">
+                                                        <label class="form-check-label" for="extraction-word">Word</label>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <div class="input-group input-group-sm">
+                                                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                                        <input type="text" id="search-input" class="form-control" placeholder="Search text...">
+                                                    </div>
+                                                </div>
+                                                <div class="raw-text-container">
+                                                    <div id="raw-response-text" class="d-flex flex-wrap"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p id="no-results-message" class="text-muted text-center mt-4">Upload an image to see results.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer" class="footer">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+             <img src="assets/img/scan.png" alt="">
+            <span class="sitename">Opti-Vision</span>
+            
+          </a>
+          <p> AI-powered computer vision service that provides image classification, object detection, and document analysis capabilities.</p>
+          <div class="footer-contact pt-3">
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About us</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="Image_classification.html">Image Classification</a></li>
+            <li><a href="object_detection.html">Object Detection</a></li>
+            <li><a href="Document_analyze.html">Document Analysis</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Our Newsletter</h4>
+          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+          <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Opti-Vision</strong> <span>All Rights Reserved</span></p>
+    </div>
+
+  </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // UI element references
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file-input');
+        const previewArea = document.getElementById('preview-area');
+        const previewImage = document.getElementById('preview-image');
+        const resultCanvas = document.getElementById('result-canvas');
+        const imageFilename = document.getElementById('image-filename');
+        const loadingIndicator = document.getElementById('loading');
+        const resultsDisplay = document.getElementById('results-display');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const classificationList = document.getElementById('classification-list');
+        const rawResponseText = document.getElementById('raw-response-text');
+        const labelsTabButton = document.getElementById('labels-tab-button');
+        const extractionLineRadio = document.getElementById('extraction-line');
+        const extractionWordRadio = document.getElementById('extraction-word');
+        const searchInput = document.getElementById('search-input');
+
+        let allDetections = []; // Stores all detections from the API response
+
+        // Event listeners for file input (click, drag-and-drop)
+        dropArea.addEventListener('click', () => fileInput.click());
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('active');
+        });
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('active');
+        });
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('active');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        });
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        });
+
+        // Event listener for highlighting text
+        rawResponseText.addEventListener('click', (e) => {
+            const clickedSpan = e.target.closest('.text-block-pill');
+            if (clickedSpan && clickedSpan.dataset.bbox) {
+                const bbox = JSON.parse(clickedSpan.dataset.bbox);
+                drawDetections(allDetections, bbox);
+            }
+        });
+        
+        // Event listener for Labels tab click to clear highlight
+        labelsTabButton.addEventListener('click', () => {
+            drawDetections(allDetections);
+        });
+
+        // Event listeners for extraction mode and search input
+        extractionLineRadio.addEventListener('change', () => renderTextBlocks());
+        extractionWordRadio.addEventListener('change', () => renderTextBlocks());
+        searchInput.addEventListener('input', () => renderTextBlocks());
+
+
+        async function handleFile(file) {
+            // Reset UI for new detection
+            noResultsMessage.classList.add('d-none');
+            resultsDisplay.classList.add('d-none');
+            loadingIndicator.classList.remove('d-none');
+            classificationList.innerHTML = '';
+            rawResponseText.innerHTML = '';
+            searchInput.value = '';
+            
+            // Clear canvas
+            const ctx = resultCanvas.getContext('2d');
+            ctx.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
+
+            // Create a preview of the selected image and handle the core logic after it loads
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                previewImage.src = e.target.result;
+                previewImage.onload = async () => {
+                    // Set canvas size to match the displayed image size
+                    resultCanvas.width = previewImage.width;
+                    resultCanvas.height = previewImage.height;
+                    
+                    previewArea.classList.remove('d-none');
+                    imageFilename.textContent = file.name;
+
+                    try {
+                        const formData = new FormData();
+                        formData.append('file', file);
+
+                        const response = await fetch('http://127.0.0.1:8000/object/detect/', {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(errorData.detail || 'Failed to detect objects.');
+                        }
+
+                        const result = await response.json();
+                        allDetections = result.detections; // Store detections globally
+                        displayResults(allDetections);
+
+                    } catch (error) {
+                        console.error('Error during object detection:', error);
+                        noResultsMessage.textContent = 'An error occurred during detection. Please try again.';
+                        noResultsMessage.classList.remove('d-none');
+                    } finally {
+                        loadingIndicator.classList.add('d-none');
+                    }
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function displayResults(detections) {
+            if (detections.length === 0) {
+                noResultsMessage.textContent = 'No objects or text detected in the image.';
+                noResultsMessage.classList.remove('d-none');
+                return;
+            }
+
+            // Draw initial bounding boxes
+            drawDetections(detections);
+
+            // Populate the labels tab
+            classificationList.innerHTML = '';
+            detections.forEach((detection) => {
+                const label = detection.label;
+                const confidence = detection.confidence;
+                const confidencePercent = (confidence * 100).toFixed(2);
+                let listItemHtml = `
+                    <li class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small font-weight-bold">${label}</span>
+                        <div class="d-flex align-items-center">
+                            <span class="text-secondary small me-2">${confidencePercent}%</span>
+                            <div class="progress" style="width: 100px; height: 8px;">
+                                <div class="progress-bar" role="progressbar" style="width: ${confidencePercent}%" aria-valuenow="${confidencePercent}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </li>
+                `;
+                classificationList.innerHTML += listItemHtml;
+            });
+            
+            // Render text blocks
+            renderTextBlocks();
+
+            resultsDisplay.classList.remove('d-none');
+            noResultsMessage.classList.add('d-none');
+        }
+
+        function renderTextBlocks() {
+            const mode = document.querySelector('input[name="extraction-mode"]:checked').value;
+            const filter = searchInput.value.toLowerCase();
+            rawResponseText.innerHTML = '';
+            let textFound = false;
+
+            allDetections.forEach(detection => {
+                if (detection.text) {
+                    textFound = true;
+                    const text = detection.text;
+                    const bbox = JSON.stringify(detection.bbox);
+
+                    if (mode === 'line') {
+                        if (text.toLowerCase().includes(filter)) {
+                            const pill = document.createElement('span');
+                            pill.classList.add('text-block-pill');
+                            pill.textContent = text;
+                            pill.dataset.bbox = bbox;
+                            rawResponseText.appendChild(pill);
+                        }
+                    } else if (mode === 'word') {
+                        const words = text.split(' ');
+                        words.forEach(word => {
+                            if (word.toLowerCase().includes(filter)) {
+                                const pill = document.createElement('span');
+                                pill.classList.add('text-block-pill');
+                                pill.textContent = word;
+                                pill.dataset.bbox = bbox;
+                                rawResponseText.appendChild(pill);
+                            }
+                        });
+                    }
+                }
+            });
+
+            if (!textFound) {
+                rawResponseText.textContent = 'No text detected.';
+            } else if (rawResponseText.innerHTML.trim() === '') {
+                rawResponseText.textContent = 'No matching text found.';
+            }
+        }
+
+        function drawDetections(detections, highlightBbox = null) {
+            const ctx = resultCanvas.getContext('2d');
+            ctx.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
+            
+            // Calculate the scaling factor
+            const scaleX = previewImage.width / previewImage.naturalWidth;
+            const scaleY = previewImage.height / previewImage.naturalHeight;
+
+            detections.forEach((detection) => {
+                const [x1, y1, x2, y2] = detection.bbox;
+                const label = detection.label;
+
+                // Draw the main bounding box
+                ctx.beginPath();
+                ctx.rect(x1 * scaleX, y1 * scaleY, (x2 - x1) * scaleX, (y2 - y1) * scaleY);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#007bff';
+                ctx.stroke();
+
+                // Draw the label background
+                ctx.font = 'bold 20px Arial';
+                const textWidth = ctx.measureText(label).width;
+                const padding = 5;
+                const textX = x1 * scaleX;
+                const textY = (y1 * scaleY) - 5;
+                
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent black background
+                ctx.fillRect(textX - padding, textY - 20, textWidth + padding * 2, 25);
+                
+                // Draw the label text
+                ctx.fillStyle = '#ffffff'; // White text
+                ctx.fillText(label, textX, textY);
+            });
+
+            // Draw the highlight box if provided
+            if (highlightBbox) {
+                const [hx1, hy1, hx2, hy2] = highlightBbox;
+                ctx.beginPath();
+                ctx.rect(hx1 * scaleX, hy1 * scaleY, (hx2 - hx1) * scaleX, (hy2 - hy1) * scaleY);
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = '#ffc107'; // Yellow color for highlight
+                ctx.stroke();
+                ctx.fillStyle = 'rgba(255, 193, 7, 0.2)'; // Semi-transparent yellow fill
+                ctx.fillRect(hx1 * scaleX, hy1 * scaleY, (hx2 - hx1) * scaleX, (hy2 - hy1) * scaleY);
+            }
+        }
+    </script>
+</body>
+</html>

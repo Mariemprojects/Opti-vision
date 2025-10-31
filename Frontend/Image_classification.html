@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Service Details - Bikin Bootstrap Template</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <style>
+        .drag-drop-area {
+            border: 2px dashed var(--bs-gray-400);
+            border-radius: 0.75rem;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .drag-drop-area:hover,
+        .drag-drop-area.active {
+            border-color: var(--bs-blue);
+            background-color: #e3f2fd;
+        }
+
+        #preview-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-panel {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: var(--bs-blue);
+            background-color: #e3f2fd;
+        }
+
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .progress-bar {
+            background-color: var(--bs-blue);
+        }
+    </style>
+
+    <!-- =======================================================
+    * Template Name: Bikin
+    * Template URL: https://bootstrapmade.com/bikin-free-simple-landing-page-template/
+    * Updated: Aug 07 2024 with Bootstrap v5.3.3
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body class="service-details-page">
+
+    <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <img src="assets/img/scan.png" alt="">
+        <h1 class="sitename">Opti-Vision</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      
+
+    </div>
+  </header>
+
+    <main class="main">
+        <!-- Page Title -->
+        <div class="page-title" data-aos="fade">
+            <div class="heading">
+                <div class="container">
+                    <div class="row d-flex justify-content-center text-center">
+                        <div class="col-lg-8">
+                            <h1>Image Classification</h1>
+                            <p class="mb-0">Assigns classes and confidence scores based on the scene and contents of an image.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="light-background"></section>
+
+        <!-- Service Details Section - Updated to match new layout -->
+        <section id="service-details" class="service-details section">
+            <div class="container">
+                <div class="row gy-5">
+
+                    <!-- Left Sidebar -->
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-box">
+                            <h4>Services List</h4>
+                            <div class="services-list">
+                                <a href="Image_classification.html" class="active"><i class="bi bi-arrow-right-circle"></i><span>Image Classification</span></a>
+                                <a href="object_detection.html"><i class="bi bi-arrow-right-circle"></i><span>Object Detection</span></a>
+                                <a href="Document_analyze.html"><i class="bi bi-arrow-right-circle"></i><span>Document Analysis</span></a>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Main Content Area -->
+                    <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                        <div class="row">
+                            <!-- Image Upload Panel -->
+                            <div class="col-lg-7">
+                                <div class="bg-white p-4 rounded-3 shadow-sm">
+                                    <h3 class="h5 mb-3">Image source</h3>
+                                    <div class="mb-4">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="image-source" id="local-file" value="local-file" checked>
+                                            <label class="form-check-label" for="local-file">Local file</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="image-source" id="object-storage" value="object-storage">
+                                            <label class="form-check-label" for="object-storage">Object storage</label>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="h6 mb-3">Upload image</h4>
+                                    <div class="drag-drop-area" id="drop-area">
+                                        <input type="file" id="file-input" class="d-none" accept="image/*">
+                                        <p class="text-secondary mb-1">Drop a file or <span class="text-primary font-weight-bold">select one</span></p>
+                                        <p class="text-muted small">PNG, JPG, or JPEG</p>
+                                    </div>
+
+                                    <div id="preview-area" class="mt-4 text-center d-none">
+                                        <img id="preview-image" src="#" alt="Image Preview" class="img-fluid rounded-3">
+                                        <p class="text-secondary small mt-2" id="image-filename"></p>
+                                    </div>
+
+                                    <div id="loading" class="text-center mt-4 d-none">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="mt-2 text-secondary">Analyzing...</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Results Panel -->
+                            <div class="col-lg-5">
+                                <div class="result-panel p-4">
+                                    <h3 class="h5 mb-3">Results</h3>
+
+                                    <div id="results-display" class="d-none">
+                                        <ul class="nav nav-tabs mb-3" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <a class="nav-link active" data-bs-toggle="tab" href="#labels-tab" role="tab" aria-selected="true">Labels</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a class="nav-link" data-bs-toggle="tab" href="#raw-text-tab" role="tab" aria-selected="false">Raw text</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="labels-tab" role="tabpanel">
+                                                <ul class="list-unstyled mb-0" id="classification-list"></ul>
+                                            </div>
+                                            <div class="tab-pane fade" id="raw-text-tab" role="tabpanel">
+                                                <pre class="bg-light p-3 rounded small text-black" id="raw-response-text"></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p id="no-results-message" class="text-muted text-center mt-4">Upload an image to see results.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+   <footer id="footer" class="footer">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+             <img src="assets/img/scan.png" alt="">
+            <span class="sitename">Opti-Vision</span>
+            
+          </a>
+          <p> AI-powered computer vision service that provides image classification, object detection, and document analysis capabilities.</p>
+          <div class="footer-contact pt-3">
+            <p><strong>Email:</strong> <span>opti_vision@example.com</span></p>
+          </div>
+          
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#about">About us</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="Image_classification.html">Image Classification</a></li>
+            <li><a href="object_detection.html">Object Detection</a></li>
+            <li><a href="Document_analyze.html">Document Analysis</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Our Newsletter</h4>
+          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+          <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Opti-Vision</strong> <span>All Rights Reserved</span></p>
+    </div>
+
+  </footer>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // UI element references
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file-input');
+        const previewArea = document.getElementById('preview-area');
+        const previewImage = document.getElementById('preview-image');
+        const imageFilename = document.getElementById('image-filename');
+        const loadingIndicator = document.getElementById('loading');
+        const resultsDisplay = document.getElementById('results-display');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const classificationList = document.getElementById('classification-list');
+        const rawResponseText = document.getElementById('raw-response-text');
+
+        // Event listeners for file input (click, drag-and-drop)
+        dropArea.addEventListener('click', () => fileInput.click());
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('active');
+        });
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('active');
+        });
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('active');
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            handleFile(file);
+        });
+
+        async function handleFile(file) {
+            if (!file) {
+                console.error('No file selected.');
+                return;
+            }
+
+            // Reset UI for new classification
+            noResultsMessage.classList.add('d-none');
+            resultsDisplay.classList.add('d-none');
+            loadingIndicator.classList.remove('d-none');
+            classificationList.innerHTML = '';
+            rawResponseText.textContent = '';
+
+            // Create a preview of the selected image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                previewArea.classList.remove('d-none');
+                imageFilename.textContent = file.name;
+            };
+            reader.readAsDataURL(file);
+
+            try {
+                // Prepare the form data to send the file to the API
+                const formData = new FormData();
+                formData.append('file', file);
+
+                // Send the POST request to your FastAPI backend
+                const response = await fetch('http://127.0.0.1:8000/image/classify', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || 'Failed to classify the image.');
+                }
+
+                // Parse the JSON response
+                const result = await response.json();
+
+                // Display the results in the UI
+                displayResults(result);
+
+            } catch (error) {
+                console.error('Error during image classification:', error);
+                // Update UI to show the error message
+                noResultsMessage.textContent = 'An error occurred during classification. Please try again.';
+                noResultsMessage.classList.remove('d-none');
+            } finally {
+                // Hide the loading indicator
+                loadingIndicator.classList.add('d-none');
+            }
+        }
+
+        function displayResults(data) {
+            // Get the predicted label and confidence from the API response
+            const label = data.predicted_label;
+            const confidence = data.confidence;
+            const confidencePercent = (confidence * 100).toFixed(2);
+
+            // Update the Labels tab
+            classificationList.innerHTML = `
+                <li class="d-flex justify-content-between align-items-center">
+                    <span class="small font-weight-bold">${label}</span>
+                    <div class="d-flex align-items-center">
+                        <span class="text-secondary small me-2">${confidencePercent}%</span>
+                        <div class="progress" style="width: 100px; height: 8px;">
+                            <div class="progress-bar" role="progressbar" style="width: ${confidencePercent}%" aria-valuenow="${confidencePercent}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </li>
+            `;
+
+            // Update the Raw Text tab with the full JSON response
+            rawResponseText.textContent = JSON.stringify(data, null, 2);
+
+            // Show the results section and hide the initial message
+            resultsDisplay.classList.remove('d-none');
+            noResultsMessage.classList.add('d-none');
+        }
+    </script>
+</body>
+
+</html>

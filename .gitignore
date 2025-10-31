@@ -1,0 +1,46 @@
+---------------------------------
+
+Environment Configuration
+
+Local environment variables and secrets
+
+---------------------------------
+
+.env
+
+---------------------------------
+
+Runtime and Output Files
+
+---------------------------------
+
+Log files
+
+logs.txt
+
+---------------------------------
+
+Backend (Python) Ignores
+
+---------------------------------
+
+Python caches and compiled files
+
+pycache/
+*.pyc
+
+ML Model Artifacts
+
+Ignoring all .pt (PyTorch) files within the models directory
+
+backend/models/*.pt
+
+---------------------------------
+
+Frontend (Node.js/NPM) Ignores
+
+---------------------------------
+
+Dependency directory
+
+frontend/node_modules/

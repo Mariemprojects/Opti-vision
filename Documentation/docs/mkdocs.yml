@@ -1,0 +1,30 @@
+site_name: AI Vision Service
+site_url: https://example.com
+site_description: Smart AI platform for image classification, object detection, and document analysis.
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: blue
+      accent: deep purple
+  features:
+    - navigation.instant
+    - navigation.sections
+    - search.highlight
+    - search.share
+
+nav:
+  - Home: index.md
+  - API Reference:
+      - Image Classification: api/classification.md
+      - Object Detection: api/detection.md
+      - Document Analysis: api/document.md
+  - About : about.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences
+  - pymdownx.details
+  - codehilite
+  - toc:
+      permalink: true
