@@ -412,6 +412,39 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="🧠 Pipeline Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-by-step-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Step-by-Step Process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemple-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemple Output
+    </span>
+  </a>
+  
 </li>
       
     </ul>
@@ -503,6 +536,39 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="🧠 Pipeline Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-by-step-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Step-by-Step Process
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ Summary
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemple-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exemple Output
+    </span>
+  </a>
+  
 </li>
       
     </ul>
@@ -552,41 +618,95 @@ It provides comprehensive <strong>OCR</strong>, <strong>language detection</stro
 <p>-<strong>PIL / OpenCV</strong> – for image preprocessing and enhancement.</p>
 <hr />
 <h2 id="pipeline-overview">🧠 Pipeline Overview<a class="headerlink" href="#pipeline-overview" title="Permanent link">&para;</a></h2>
-<p>The system uses a <strong>multi-stage pipeline</strong> to intelligently analyze and interpret document images.</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
-    - A[📤 Upload Document Image] --&gt; B[🧩 OCR Stage (Pytesseract)]
-    - B --&gt; C[🧾 Document Typing (invoice, letter, handwritten)]
-    - C --&gt; D{Document Type}
-    - D --&gt;|Printed| E[Pytesseract for printed text]
-    - D --&gt;|Handwritten| F[TrOCR (Handwriting Recognition)]
-    - E --&gt; G[🌐 Language Detection (langid + langdetect)]
-    - F --&gt; G
-    - G --&gt; H[🔍 Entity Extraction (Regex &amp; Heuristics)]
-    - H --&gt; I[📊 Structured JSON Output]
-
-````
-## Exemple Output
-```json
-{
-  &quot;raw_text&quot;: &quot;Invoice #INV-4567\nDate: 2024-06-15\nAmount: 320.00 USD\n...&quot;,
-  &quot;language&quot;: {
-    &quot;detected&quot;: &quot;en&quot;,
-    &quot;confidence&quot;: 0.98
-  },
-  &quot;entities&quot;: {
-    &quot;INVOICE_NUMBER&quot;: &quot;INV-4567&quot;,
-    &quot;DATE&quot;: &quot;2024-06-15&quot;,
-    &quot;AMOUNT&quot;: &quot;320.00 USD&quot;
-  },
-  &quot;line_items&quot;: [
-    { &quot;item&quot;: &quot;Product A&quot;, &quot;quantity&quot;: 2, &quot;price&quot;: 50 },
-    { &quot;item&quot;: &quot;Product B&quot;, &quot;quantity&quot;: 3, &quot;price&quot;: 40 }
-  ],
-  &quot;summary&quot;: {
-    &quot;document_type&quot;: &quot;invoice&quot;,
-    &quot;contains_handwriting&quot;: false
-  }
-}
+<p>The system uses a <strong>multi-stage processing chain</strong> to intelligently analyze document images.<br />
+This approach ensures the use of the most suitable tool — whether <strong>standard OCR</strong> or <strong>handwriting recognition</strong> — depending on the content.</p>
+<hr />
+<h3 id="step-by-step-process">📋 Step-by-Step Process<a class="headerlink" href="#step-by-step-process" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Step</strong></th>
+<th style="text-align: left;"><strong>Primary Role</strong></th>
+<th style="text-align: left;"><strong>Technology / Method Used</strong></th>
+<th style="text-align: left;"><strong>Detailed Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1. Input</strong></td>
+<td style="text-align: left;">Document image reception</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">The user submits a scanned or photographed image of the document.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2. Initial OCR</strong></td>
+<td style="text-align: left;">Extract a text preview</td>
+<td style="text-align: left;"><strong>Pytesseract</strong></td>
+<td style="text-align: left;">A quick first read is performed on the image to obtain the raw text content needed for the next step.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3. Classification</strong></td>
+<td style="text-align: left;">Determine the document nature</td>
+<td style="text-align: left;"><strong>Classification Algorithm</strong></td>
+<td style="text-align: left;">The system analyzes the raw text (Step 2) to categorize the document into a specific type: <em>Invoice</em>, <em>Letter</em>, or <em>Handwritten</em>.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4. Decision</strong></td>
+<td style="text-align: left;">Choose the optimal OCR engine</td>
+<td style="text-align: left;"><strong>Conditional Logic</strong></td>
+<td style="text-align: left;">The system selects the best tool for the document type identified in Step 3.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>5. Specialized OCR</strong></td>
+<td style="text-align: left;">Printed vs. Handwritten recognition</td>
+<td style="text-align: left;"><strong>Pytesseract</strong> (Printed) / <strong>TrOCR</strong> (Handwritten)</td>
+<td style="text-align: left;">The document is processed by the most effective tool for its format, ensuring the highest-quality text extraction.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>6. Post-Processing</strong></td>
+<td style="text-align: left;">Prepare for semantic analysis</td>
+<td style="text-align: left;"><strong>langid</strong>, <strong>langdetect</strong></td>
+<td style="text-align: left;">The extracted text (Step 5) is analyzed for language detection to improve the accuracy of later entity extraction.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>7. Entity Extraction</strong></td>
+<td style="text-align: left;">Identify and isolate useful information</td>
+<td style="text-align: left;"><strong>Regex &amp; Heuristics</strong></td>
+<td style="text-align: left;">Key data (dates, amounts, reference numbers, addresses) are extracted. The free text is transformed into structured fragments of information.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>8. Output</strong></td>
+<td style="text-align: left;">Provide the final result</td>
+<td style="text-align: left;"><strong>JSON</strong></td>
+<td style="text-align: left;">The extracted information is structured and exported in JSON format, ready for integration with other systems.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="summary">⚙️ Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h3>
+<p>This <strong>pipeline architecture</strong> combines rule-based logic and deep learning, balancing <strong>speed, adaptability, and precision</strong>.<br />
+It allows <em>Opti-Vision</em> to automatically detect, interpret, and structure textual information from various document formats — from printed invoices to handwritten notes.</p>
+<h2 id="exemple-output">Exemple Output<a class="headerlink" href="#exemple-output" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;raw_text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invoice #INV-4567\nDate: 2024-06-15\nAmount: 320.00 USD\n...&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;detected&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.98</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;entities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;INVOICE_NUMBER&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INV-4567&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;DATE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-06-15&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;AMOUNT&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;320.00 USD&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;line_items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;item&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Product A&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;quantity&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;item&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Product B&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;quantity&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;document_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;invoice&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;contains_handwriting&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 
 
