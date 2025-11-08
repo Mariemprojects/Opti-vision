@@ -414,15 +414,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#exemple-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      Exemple Output
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -514,15 +505,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#exemple-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      Exemple Output
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -571,40 +553,41 @@ It provides comprehensive <strong>OCR</strong>, <strong>language detection</stro
 <hr />
 <h2 id="pipeline-overview">🧠 Pipeline Overview<a class="headerlink" href="#pipeline-overview" title="Permanent link">&para;</a></h2>
 <p>The system uses a <strong>multi-stage pipeline</strong> to intelligently analyze and interpret document images.</p>
-<p>```mermaid
-flowchart TD
-    A[📤 Upload Document Image] --&gt; B[🧩 OCR Stage (Pytesseract)]
-    B --&gt; C[🧾 Document Typing (invoice, letter, handwritten)]
-    C --&gt; D{Document Type}
-    D --&gt;|Printed| E[Pytesseract for printed text]
-    D --&gt;|Handwritten| F[TrOCR (Handwriting Recognition)]
-    E --&gt; G[🌐 Language Detection (langid + langdetect)]
-    F --&gt; G
-    G --&gt; H[🔍 Entity Extraction (Regex &amp; Heuristics)]
-    H --&gt; I[📊 Structured JSON Output]</p>
-<p>````</p>
-<h2 id="exemple-output">Exemple Output<a class="headerlink" href="#exemple-output" title="Permanent link">&para;</a></h2>
-<p>```json
+<div class="highlight"><pre><span></span><code>flowchart TD
+    - A[📤 Upload Document Image] --&gt; B[🧩 OCR Stage (Pytesseract)]
+    - B --&gt; C[🧾 Document Typing (invoice, letter, handwritten)]
+    - C --&gt; D{Document Type}
+    - D --&gt;|Printed| E[Pytesseract for printed text]
+    - D --&gt;|Handwritten| F[TrOCR (Handwriting Recognition)]
+    - E --&gt; G[🌐 Language Detection (langid + langdetect)]
+    - F --&gt; G
+    - G --&gt; H[🔍 Entity Extraction (Regex &amp; Heuristics)]
+    - H --&gt; I[📊 Structured JSON Output]
+
+````
+## Exemple Output
+```json
 {
-  "raw_text": "Invoice #INV-4567\nDate: 2024-06-15\nAmount: 320.00 USD\n...",
-  "language": {
-    "detected": "en",
-    "confidence": 0.98
+  &quot;raw_text&quot;: &quot;Invoice #INV-4567\nDate: 2024-06-15\nAmount: 320.00 USD\n...&quot;,
+  &quot;language&quot;: {
+    &quot;detected&quot;: &quot;en&quot;,
+    &quot;confidence&quot;: 0.98
   },
-  "entities": {
-    "INVOICE_NUMBER": "INV-4567",
-    "DATE": "2024-06-15",
-    "AMOUNT": "320.00 USD"
+  &quot;entities&quot;: {
+    &quot;INVOICE_NUMBER&quot;: &quot;INV-4567&quot;,
+    &quot;DATE&quot;: &quot;2024-06-15&quot;,
+    &quot;AMOUNT&quot;: &quot;320.00 USD&quot;
   },
-  "line_items": [
-    { "item": "Product A", "quantity": 2, "price": 50 },
-    { "item": "Product B", "quantity": 3, "price": 40 }
+  &quot;line_items&quot;: [
+    { &quot;item&quot;: &quot;Product A&quot;, &quot;quantity&quot;: 2, &quot;price&quot;: 50 },
+    { &quot;item&quot;: &quot;Product B&quot;, &quot;quantity&quot;: 3, &quot;price&quot;: 40 }
   ],
-  "summary": {
-    "document_type": "invoice",
-    "contains_handwriting": false
+  &quot;summary&quot;: {
+    &quot;document_type&quot;: &quot;invoice&quot;,
+    &quot;contains_handwriting&quot;: false
   }
-}</p>
+}
+</code></pre></div>
 
 
 
