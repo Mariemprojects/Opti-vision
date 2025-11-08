@@ -158,11 +158,6 @@ mkdocs serve
 
 Then open 👉 http://127.0.0.1:8000
 
-# 🧾 License
-
-This project is licensed under the MIT License.
-Feel free to fork and improve it.
-
 # ⭐ Support
 
 If you like this project, please star 🌟 the repository — it motivates me to keep building and improving Opti-Vision!
